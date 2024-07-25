@@ -1,0 +1,75 @@
+# Maven target directory
+/target/
+
+# IntelliJ IDEA project files
+/.idea
+/*.iml
+/*.ipr
+/*.iws
+
+# Eclipse project files
+/.settings/
+/.project
+/.classpath
+
+# VS Code workspace settings
+/.vscode/
+
+# MacOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+
+# Log files
+/logs/
+/*.log
+
+# Spring Boot specific files
+/spring.log
+
+# Environment variable files
+.env
+.env.local
+.env.*.local
+.env.test
+.env.test.local
+
+# Temporary files
+/tmp/
+
+# Build output
+/out/
+
+# Maven wrapper files
+/.mvn/wrapper/maven-wrapper.jar
+
+# Dependency directory
+/.m2/
+
+# Operating System files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.old
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+
+# Node.js related files (if any)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Package files
+*.war
+*.ear
+*.jar
+
+# Logs
+*.log
+logs/
+*.log.*
