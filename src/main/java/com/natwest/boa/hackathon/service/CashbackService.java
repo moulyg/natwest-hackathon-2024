@@ -18,12 +18,8 @@ public class CashbackService {
 
 
     public Cashback calculateRewardCashBack(double amount, String paymentId, String accountNumber) {
-
-
         double cashback = amount * 0.01; // 1% of the amount
-
         return saveCashback(accountNumber, paymentId, cashback, amount);
-
     }
 
     public Cashback saveCashback(String accountNo, String paymentId, double cashbackValue, double transactionAmount) {
