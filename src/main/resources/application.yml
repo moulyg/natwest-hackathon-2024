@@ -1,0 +1,48 @@
+
+client:
+  id: Vcg5aeUlGO1jRtqGlvC_Y_l0DfPQblP15DcrCOVsO6Y=
+  secret: iwRNPIuQPl_cCaJATp_KpuSDuEHOBdihRQ77OkFWuvI=
+  redirectUri: https://e4cb6687-5d8f-4e34-b304-6c74ede74486.example.org/redirect
+  financialId: 0015800000jfwxXAAQ
+  state: ABC
+  authorizationUsername: 123456789012@team.acc.org
+  authorizationAccount: 50000012345601
+  tokenUrl: https://ob.sandbox.natwest.com/token
+  initRunning: true
+  jwsSignature: DUMMY_SIGNATURE
+  idempotencyKey: 123456
+
+
+tls:
+  alias:
+  enableMatls: false
+  keyStore:
+    location:
+    password:
+  trustStore:
+    location:
+    password:
+
+pisp:
+  target:
+    context: /open-banking/v3.1/pisp
+    baseUri: https://ob.sandbox.natwest.com
+    audience: https://api.sandbox.natwest.com/authorize
+
+spring:
+  log4j:
+    logger:
+      httpclient:
+        wire: DEBUG
+# H2 Database configuration
+# H2 database URL
+  datasource:
+    url: jdbc:h2:mem:testdb
+    # Database username and password
+    username: sa
+    password:
+  # H2 console settings
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

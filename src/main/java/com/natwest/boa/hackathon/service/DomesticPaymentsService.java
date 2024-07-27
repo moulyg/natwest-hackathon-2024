@@ -1,12 +1,12 @@
 package com.natwest.boa.hackathon.service;
 
 
-import com.natwest.boa.hackathon.model.OBDomestic;
-import com.natwest.boa.hackathon.model.OBDomesticInstructedAmount;
-import com.natwest.boa.hackathon.model.OBMultiAuthorisation;
-import com.natwest.boa.hackathon.model.OBTransactionIndividualStatusCode;
-import com.natwest.boa.hackathon.model.OBWriteDataDomesticResponse;
-import com.natwest.boa.hackathon.model.OBWriteDomestic;
+import com.natwest.boa.hackathon.model.payments.OBDomestic;
+import com.natwest.boa.hackathon.model.payments.OBDomesticInstructedAmount;
+import com.natwest.boa.hackathon.model.payments.OBMultiAuthorisation;
+import com.natwest.boa.hackathon.model.payments.OBTransactionIndividualStatusCode;
+import com.natwest.boa.hackathon.model.payments.OBWriteDataDomesticResponse;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomestic;
 import com.natwest.boa.hackathon.model.cashback.Cashback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
