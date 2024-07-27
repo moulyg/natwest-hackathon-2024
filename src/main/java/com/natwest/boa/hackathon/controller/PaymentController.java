@@ -74,6 +74,10 @@ public class PaymentController {
 
         OBWriteDomesticConsentResponse obWriteDataDomesticConsentResponse2 = pispService.createPaymentConsent(obWriteDomesticConsent2, tokenResponse.getAccessToken());
         String consentId = obWriteDataDomesticConsentResponse2.getData().getConsentId();
+
+
+
+        // TODO save obWriteDomesticConsent2 against consentId in session or cache. to retrive later
         String authorizeUri = pispService.createAuthorizeUri(consentId);
         RedirectView rv = new RedirectView();
         rv.setContextRelative(true);

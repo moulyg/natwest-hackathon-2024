@@ -21,6 +21,8 @@ public class DomesticPaymentsController {
 
     @PostMapping("/domestic-payments")
     public OBWriteDataDomesticResponse domesticPayments(@RequestBody OBWriteDomestic obWriteDomestic) {
+
+        // TODO retrive the saved domestic payment request (OBWriteDomestic) from session or cache
         return domesticPaymentsService.makeDomesticPayment(obWriteDomestic);
     }
 
