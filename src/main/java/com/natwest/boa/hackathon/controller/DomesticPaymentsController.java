@@ -1,7 +1,7 @@
 package com.natwest.boa.hackathon.controller;
 
-import com.natwest.boa.hackathon.model.OBWriteDataDomesticResponse;
-import com.natwest.boa.hackathon.model.OBWriteDomestic;
+import com.natwest.boa.hackathon.model.payments.OBWriteDataDomesticResponse;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomestic;
 import com.natwest.boa.hackathon.service.DomesticPaymentsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
