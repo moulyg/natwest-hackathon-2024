@@ -28,7 +28,7 @@ public class TokenService {
         tokenRequest.setClientId(clientConfig.getClientId());
         tokenRequest.setClientSecret(clientConfig.getClientSecret());
         tokenRequest.setGrantType("client_credentials");
-        tokenRequest.setScope("payment");
+        tokenRequest.setScope("payments");
       try {
           return tokenRemote.generateToken(tokenRequest);
       } catch (HttpClientErrorException ex) {

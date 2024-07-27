@@ -2,7 +2,7 @@
 client:
   id: Vcg5aeUlGO1jRtqGlvC_Y_l0DfPQblP15DcrCOVsO6Y=
   secret: iwRNPIuQPl_cCaJATp_KpuSDuEHOBdihRQ77OkFWuvI=
-  redirectUri: https://e4cb6687-5d8f-4e34-b304-6c74ede74486.example.org/redirect
+  redirectUri: http://localhost:8080/open-banking/v3/payment-redirection
   financialId: 0015800000jfwxXAAQ
   state: ABC
   authorizationUsername: 123456789012@team.acc.org

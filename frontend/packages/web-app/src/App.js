@@ -84,7 +84,10 @@ Within 30 days of delivery, you may return new, unopened physical merchandise in
 
       <p>Order totals include VAT. See details</p>
 
-      <Button type="primary" block>Buy now</Button>
+<form action="http://localhost:8080/open-banking/v3/payment-submit" method="POST">
+          <input type="hidden" value="50" name="amount" />
+      <Button type="primary" htmlType="submit" block>Buy now</Button>
+        </form>
                       </Card>
                       <Card bordered={false}
                           title={<Title level={5}>Your Sustainable Contribution</Title>}
