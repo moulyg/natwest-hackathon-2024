@@ -135,13 +135,11 @@ public class OBWriteDomesticConsentResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OBWriteDomesticConsentResponse2 {\n");
 
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    risk: ").append(toIndentedString(risk)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
-    sb.append("}");
     return sb.toString();
   }
 

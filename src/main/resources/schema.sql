@@ -7,3 +7,10 @@ CREATE TABLE cashback (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uq_account_payment UNIQUE (account_no, payment_id)
 );
+
+
+CREATE TABLE IF NOT EXISTS consents (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    consent_id VARCHAR(255) NOT NULL,
+    consent_data TEXT
+);

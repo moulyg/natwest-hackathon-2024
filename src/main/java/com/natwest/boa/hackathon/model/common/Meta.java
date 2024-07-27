@@ -99,7 +99,7 @@ public class Meta {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class Meta {\n");
+        sb.append("{\n");
 
         sb.append("    totalPages: ").append(toIndentedString(totalPages)).append("\n");
         sb.append("    firstAvailableDateTime: ").append(toIndentedString(firstAvailableDateTime)).append("\n");

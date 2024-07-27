@@ -263,7 +263,7 @@ public class OBDomestic {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBDomestic2 {\n");
+        sb.append("{\n");
 
         sb.append("    instructionIdentification: ").append(toIndentedString(instructionIdentification)).append("\n");
         sb.append("    endToEndIdentification: ").append(toIndentedString(endToEndIdentification)).append("\n");

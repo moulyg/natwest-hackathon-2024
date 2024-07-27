@@ -71,7 +71,7 @@ public class OBAuthorisation {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBAuthorisation1 {\n");
+        sb.append("{\n");
 
         sb.append("    authorisationType: ").append(toIndentedString(authorisationType)).append("\n");
         sb.append("    completionDateTime: ").append(toIndentedString(completionDateTime)).append("\n");

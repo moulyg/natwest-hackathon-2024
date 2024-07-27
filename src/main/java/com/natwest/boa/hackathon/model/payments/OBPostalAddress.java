@@ -284,7 +284,7 @@ public class OBPostalAddress {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBPostalAddress6 {\n");
+        sb.append("{\n");
 
         sb.append("    addressType: ").append(toIndentedString(addressType)).append("\n");
         sb.append("    department: ").append(toIndentedString(department)).append("\n");

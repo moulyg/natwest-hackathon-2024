@@ -125,8 +125,7 @@ public class OBCashAccountCreditor {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OBCashAccountCreditor3 {\n");
-
+    sb.append("{\n");
     sb.append("    schemeName: ").append(toIndentedString(schemeName)).append("\n");
     sb.append("    identification: ").append(toIndentedString(identification)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

@@ -2,11 +2,15 @@ package com.natwest.boa.hackathon.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.natwest.boa.hackathon.model.consent.Consent;
 import com.natwest.boa.hackathon.model.payments.*;
 import com.natwest.boa.hackathon.model.token.TokenResponse;
+import com.natwest.boa.hackathon.service.ConsentService;
 import com.natwest.boa.hackathon.service.PaymentService;
 import com.natwest.boa.hackathon.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,15 +23,20 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class PaymentController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+
     private TokenService tokenService;
 
     private PaymentService pispService;
+
+    private ConsentService consentService;
     private ObjectMapper mapper;
 
     @Autowired
-    public PaymentController(TokenService tokenService, PaymentService pispService) {
+    public PaymentController(TokenService tokenService, PaymentService pispService, ConsentService consentService) {
         this.tokenService = tokenService;
         this.pispService = pispService;
+        this.consentService = consentService;
         mapper = new ObjectMapper();
     }
 
@@ -75,9 +84,12 @@ public class PaymentController {
         OBWriteDomesticConsentResponse obWriteDataDomesticConsentResponse2 = pispService.createPaymentConsent(obWriteDomesticConsent2, tokenResponse.getAccessToken());
         String consentId = obWriteDataDomesticConsentResponse2.getData().getConsentId();
 
-
-
         // TODO save obWriteDomesticConsent2 against consentId in session or cache. to retrive later
+       Consent storedConsent = consentService.saveConsent(consentId, obWriteDataDomesticConsentResponse2.toString());
+
+       logger.info("Saved Consent Details : "+storedConsent.toString());
+
+
         String authorizeUri = pispService.createAuthorizeUri(consentId);
         RedirectView rv = new RedirectView();
         rv.setContextRelative(true);

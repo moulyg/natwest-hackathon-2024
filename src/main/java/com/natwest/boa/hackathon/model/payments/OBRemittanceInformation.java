@@ -80,7 +80,7 @@ public class OBRemittanceInformation {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBRemittanceInformation1 {\n");
+        sb.append("{\n");
 
         sb.append("    unstructured: ").append(toIndentedString(unstructured)).append("\n");
         sb.append("    reference: ").append(toIndentedString(reference)).append("\n");

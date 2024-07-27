@@ -129,7 +129,7 @@ public class OBCashAccountDebtor {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBCashAccountDebtor4 {\n");
+        sb.append("{\n");
 
         sb.append("    schemeName: ").append(toIndentedString(schemeName)).append("\n");
         sb.append("    identification: ").append(toIndentedString(identification)).append("\n");

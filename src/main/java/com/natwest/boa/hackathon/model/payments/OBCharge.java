@@ -103,7 +103,7 @@ public class OBCharge {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OBCharge2 {\n");
+    sb.append("{\n");
 
     sb.append("    chargeBearer: ").append(toIndentedString(chargeBearer)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");

@@ -82,7 +82,7 @@ public class OBDomesticInstructedAmount {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBDomestic2InstructedAmount {\n");
+        sb.append("{\n");
 
         sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
         sb.append("    currency: ").append(toIndentedString(currency)).append("\n");

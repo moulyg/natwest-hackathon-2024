@@ -131,7 +131,7 @@ public class OBRisk {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBRisk1 {\n");
+        sb.append("{\n");
 
         sb.append("    paymentContextCode: ").append(toIndentedString(paymentContextCode)).append("\n");
         sb.append("    merchantCategoryCode: ").append(toIndentedString(merchantCategoryCode)).append("\n");

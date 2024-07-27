@@ -27,7 +27,7 @@ public class OBSupplementaryData {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OBSupplementaryData1 {\n");
+    sb.append("{\n");
 
     sb.append("}");
     return sb.toString();

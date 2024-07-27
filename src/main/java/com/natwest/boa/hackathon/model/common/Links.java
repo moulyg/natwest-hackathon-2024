@@ -150,7 +150,7 @@ public class Links {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class Links {\n");
+        sb.append("{\n");
 
         sb.append("    self: ").append(toIndentedString(self)).append("\n");
         sb.append("    first: ").append(toIndentedString(first)).append("\n");

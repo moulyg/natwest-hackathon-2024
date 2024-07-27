@@ -299,7 +299,7 @@ public class OBWriteDataDomesticConsentResponse {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class OBWriteDataDomesticConsentResponse2 {\n");
+        sb.append("{\n");
 
         sb.append("    consentId: ").append(toIndentedString(consentId)).append("\n");
         sb.append("    creationDateTime: ").append(toIndentedString(creationDateTime)).append("\n");
