@@ -32,14 +32,14 @@ public class CashbackService {
     }
 
     public Map<String, Object> getCashbackDetailsForAccount(String accountNo) {
-        List<Cashback> cashbacks = cashbackRepository.findByAccountNo(accountNo);
-        BigDecimal totalCashback = cashbacks.stream()
+        List<Cashback> cashBacks = cashbackRepository.findByAccountNo(accountNo);
+        BigDecimal totalCashback = cashBacks.stream()
                 .map(Cashback::getCashbackValue)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return Map.of(
                 "totalCashback", totalCashback,
-                "cashbacks", cashbacks
+                "cashBacks", cashBacks
         );
     }
 }
