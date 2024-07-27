@@ -7,6 +7,7 @@ import com.natwest.boa.hackathon.model.OBMultiAuthorisation;
 import com.natwest.boa.hackathon.model.OBTransactionIndividualStatusCode;
 import com.natwest.boa.hackathon.model.OBWriteDataDomesticResponse;
 import com.natwest.boa.hackathon.model.OBWriteDomestic;
+import com.natwest.boa.hackathon.model.cashback.Cashback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,19 @@ public class DomesticPaymentsService {
     private static final Logger logger = LoggerFactory.getLogger(DomesticPaymentsService.class);
 
     @Autowired
-    private RewardsService rewardsService;
+    private CashbackService cashbackService;
 
     public OBWriteDataDomesticResponse makeDomesticPayment(OBWriteDomestic obWriteDomestic) {
 
         //call domestic-payments API
         OBWriteDataDomesticResponse obWriteDataDomesticResponse = new OBWriteDataDomesticResponse();
         obWriteDataDomesticResponse.setStatus(OBTransactionIndividualStatusCode.ACCEPTEDSETTLEMENTINPROCESS);
+        obWriteDataDomesticResponse.domesticPaymentId(UUID.randomUUID().toString());
 
         if (isPaymentSuccessful(obWriteDataDomesticResponse.getStatus()) && Objects.nonNull(obWriteDomestic.getData().getInitiation().getSustainableProductsAmount())) {
-            //Call Rewards API
-
-            int cashbackAmount = rewardsService.calculateRewardCashBack(Double.parseDouble(obWriteDomestic.getData().getInitiation().getSustainableProductsAmount()));
-            logger.info("Received cashback of "+cashbackAmount+" GBP for sustainable products");
+            //Call Cashback API
+            Cashback cashbackAmount = cashbackService.calculateRewardCashBack(Double.parseDouble(obWriteDomestic.getData().getInitiation().getSustainableProductsAmount()), obWriteDataDomesticResponse.getDomesticPaymentId(), obWriteDomestic.getData().getInitiation().getDebtorAccount().getIdentification());
+            logger.info("Received cashback of "+cashbackAmount.toString());
         }
         return buildOBWriteDataDomesticResponse();
     }
