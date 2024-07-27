@@ -1,0 +1,17 @@
+.formattedData {
+    background-color: black;
+    padding: 15px;
+}
+
+.formattedData pre {
+    color: white;
+    text-align: left;
+}
+
+.infoContainer h2 {
+    font-size: 24px;
+    line-height: 24px;
+    color: #645f50;
+    margin-bottom: 30px;
+    text-align: center;
+}

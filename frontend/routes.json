@@ -1,0 +1,12 @@
+{
+    "/api/*": "/$1",
+    "/:type/init": "/init",
+    "/aisp/accounts":"/accounts",
+    "/aisp/accounts/:id": "/account",
+    "/aisp/accounts/:id/transactions": "/transactions",
+    "/aisp/accounts/:id/direct-debits": "/direct-debits",
+    "/aisp/accounts/:id/balances": "/balances",
+    "/aisp/accounts/:id/standing-orders": "/standing-orders",
+    "/aisp/accounts/:id/products": "/products",
+    "/pisp/domestic-payments/:id": "/domestic-payment-status"
+}

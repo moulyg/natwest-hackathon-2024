@@ -1,0 +1,54 @@
+.apiContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 40px;
+    width: 95%;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+    .apiContainer {
+        flex-direction: column;
+    }
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 30px;
+    margin-bottom: 50px;
+    width:300px;
+}
+
+.pageTitle {
+    font-size: 24px;
+    line-height: 24px;
+    color: #645f50;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.buttonLinks {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    text-align: center;
+    color: white;
+    background-color: teal;
+    border: none;
+    text-decoration: none;
+}
+
+.buttonLinks:not(:first-child) {
+    margin-top: 15px;
+}
+
+.displayInfo {
+    flex-grow:1;
+}
+
+.mainContainer {
+    margin-top: 30px;
+    text-align: center;
+}
