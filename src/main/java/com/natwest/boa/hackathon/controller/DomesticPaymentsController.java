@@ -1,12 +1,12 @@
 package com.natwest.boa.hackathon.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.natwest.boa.hackathon.model.payments.OBWriteDataDomesticResponse;
 import com.natwest.boa.hackathon.model.payments.OBWriteDomestic;
 import com.natwest.boa.hackathon.service.DomesticPaymentsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -20,10 +20,11 @@ public class DomesticPaymentsController {
     }
 
     @PostMapping("/domestic-payments")
-    public OBWriteDataDomesticResponse domesticPayments(@RequestBody OBWriteDomestic obWriteDomestic) {
-
+    @CrossOrigin
+    public OBWriteDataDomesticResponse domesticPayments(@RequestBody Map<String, String> body) throws JsonProcessingException, InterruptedException {
+        System.out.println(body);
         // TODO retrive the saved domestic payment request (OBWriteDomestic) from session or cache
-        return domesticPaymentsService.makeDomesticPayment(obWriteDomestic);
+        return domesticPaymentsService.makeDomesticPayment(body);
     }
 
 }

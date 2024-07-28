@@ -1,18 +1,21 @@
 package com.natwest.boa.hackathon.service;
 
 
-import com.natwest.boa.hackathon.model.payments.OBDomestic;
-import com.natwest.boa.hackathon.model.payments.OBDomesticInstructedAmount;
-import com.natwest.boa.hackathon.model.payments.OBMultiAuthorisation;
-import com.natwest.boa.hackathon.model.payments.OBTransactionIndividualStatusCode;
-import com.natwest.boa.hackathon.model.payments.OBWriteDataDomesticResponse;
-import com.natwest.boa.hackathon.model.payments.OBWriteDomestic;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.natwest.boa.hackathon.model.consent.Consent;
+import com.natwest.boa.hackathon.model.payments.*;
 import com.natwest.boa.hackathon.model.cashback.Cashback;
+import com.natwest.boa.hackathon.model.token.TokenResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.OffsetDateTime;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,16 +27,41 @@ public class DomesticPaymentsService {
     @Autowired
     private CashbackService cashbackService;
 
-    public OBWriteDataDomesticResponse makeDomesticPayment(OBWriteDomestic obWriteDomestic) {
+    @Autowired
+    private TokenService tokenService;
+    
+    @Autowired
+    private PaymentService pispService;
 
-        //call domestic-payments API
-        OBWriteDataDomesticResponse obWriteDataDomesticResponse = new OBWriteDataDomesticResponse();
-        obWriteDataDomesticResponse.setStatus(OBTransactionIndividualStatusCode.ACCEPTEDSETTLEMENTINPROCESS);
-        obWriteDataDomesticResponse.domesticPaymentId(UUID.randomUUID().toString());
+    @Autowired
+    private ConsentService consentService;
 
-        if (isPaymentSuccessful(obWriteDataDomesticResponse.getStatus()) && Objects.nonNull(obWriteDomestic.getData().getInitiation().getSustainableProductsAmount())) {
+    private ObjectMapper mapper;
+
+    public DomesticPaymentsService() {
+        mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(new JavaTimeModule());
+    }
+
+    public OBWriteDataDomesticResponse makeDomesticPayment(Map<String, String> body) throws JsonProcessingException, InterruptedException {
+        String code = body.get("code");
+        String state = body.get("state");
+        Thread.sleep(2000);
+        TokenResponse tokenResponse = tokenService.exchangeAuthorizationCode(code);
+
+        Consent consentById = consentService.getConsentById(Long.parseLong(state));
+        String consentData = consentById.getConsentData();
+        String consentId = consentById.getConsentId();
+        OBWriteDomestic obWriteDomestic = mapper.readValue(consentData, OBWriteDomestic.class);
+        obWriteDomestic.getData().setConsentId(consentId);
+        OBWriteDomesticResponse paymentsSubmit = pispService.createDomesticPayment(obWriteDomestic, tokenResponse.getAccessToken());
+
+        String sustainableProductsAmount = body.get("sustainableProductsAmount");
+        if (isPaymentSuccessful(paymentsSubmit.getData().getStatus()) && Objects.nonNull(sustainableProductsAmount)) {
             //Call Cashback API
-            Cashback cashbackAmount = cashbackService.calculateRewardCashBack(Double.parseDouble(obWriteDomestic.getData().getInitiation().getSustainableProductsAmount()), obWriteDataDomesticResponse.getDomesticPaymentId(), obWriteDomestic.getData().getInitiation().getDebtorAccount().getIdentification());
+            Cashback cashbackAmount = cashbackService.calculateRewardCashBack(Double.parseDouble(sustainableProductsAmount), paymentsSubmit.getData().getDomesticPaymentId(), paymentsSubmit.getData().getDebtor().getIdentification());
             logger.info("Received cashback of "+cashbackAmount.toString());
         }
         return buildOBWriteDataDomesticResponse();

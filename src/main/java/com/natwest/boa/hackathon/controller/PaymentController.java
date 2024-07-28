@@ -1,7 +1,10 @@
 package com.natwest.boa.hackathon.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.natwest.boa.hackathon.model.consent.Consent;
 import com.natwest.boa.hackathon.model.payments.*;
 import com.natwest.boa.hackathon.model.token.TokenResponse;
@@ -38,13 +41,15 @@ public class PaymentController {
         this.pispService = pispService;
         this.consentService = consentService;
         mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.registerModule(new JavaTimeModule());
     }
 
     @RequestMapping(
             value = "/open-banking/v3/payment-submit",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public RedirectView paymentSubmission() {
+    public RedirectView paymentSubmission() throws JsonProcessingException {
         TokenResponse tokenResponse = tokenService.getTokenResponse();
 
 
@@ -85,12 +90,12 @@ public class PaymentController {
         String consentId = obWriteDataDomesticConsentResponse2.getData().getConsentId();
 
         // TODO save obWriteDomesticConsent2 against consentId in session or cache. to retrive later
-       Consent storedConsent = consentService.saveConsent(consentId, obWriteDataDomesticConsentResponse2.toString());
+        Consent storedConsent = consentService.saveConsent(consentId, mapper.writeValueAsString(obWriteDataDomesticConsentResponse2));
 
-       logger.info("Saved Consent Details : "+storedConsent.toString());
+        logger.info("Saved Consent Details : " + storedConsent.toString());
 
 
-        String authorizeUri = pispService.createAuthorizeUri(consentId);
+        String authorizeUri = pispService.createAuthorizeUri(consentId, storedConsent.getId().toString());
         RedirectView rv = new RedirectView();
         rv.setContextRelative(true);
         rv.setUrl(authorizeUri);
@@ -100,9 +105,7 @@ public class PaymentController {
     @RequestMapping(
             value = "/open-banking/v3/payment-redirection{parameters}",
             method = RequestMethod.GET)
-    public RedirectView paymentRedirection(@PathVariable String parameters, HttpServletRequest httpServletRequest)
-
-    {
+    public RedirectView paymentRedirection(@PathVariable String parameters, HttpServletRequest httpServletRequest) {
 
         System.out.println("redirection completed = " + parameters + httpServletRequest.getRequestURI());
         RedirectView rv = new RedirectView();

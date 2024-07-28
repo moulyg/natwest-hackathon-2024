@@ -2,7 +2,7 @@ import axios from 'axios'
 import { setRequestInterceptor } from './request-interceptor'
 import { setError, setLoader } from '../actions/common'
 
-const base_url = 'http://localhost:8080/open-banking/v3'
+const base_url = 'http://localhost:8080/api/v1'
 
 setRequestInterceptor()
 
@@ -20,6 +20,7 @@ export default function createRequest(
         method,
         data: data,
         headers,
+        changeOrigin: true
     })
         .then(function (response) {
             // dont stop loader in case of redirection

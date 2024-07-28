@@ -45,6 +45,10 @@ public class OBWriteDataDomesticResponse {
     @JsonProperty("Initiation")
     private OBDomestic initiation = null;
 
+
+    @JsonProperty("Debtor")
+    private OBCashAccountDebtor Debtor = null;
+
     @JsonProperty("MultiAuthorisation")
     private OBMultiAuthorisation multiAuthorisation = null;
 
@@ -325,5 +329,13 @@ public class OBWriteDataDomesticResponse {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
+
+    public OBCashAccountDebtor getDebtor() {
+        return Debtor;
+    }
+
+    public void setDebtor(OBCashAccountDebtor debtor) {
+        Debtor = debtor;
     }
 }

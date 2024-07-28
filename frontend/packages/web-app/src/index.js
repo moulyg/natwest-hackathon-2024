@@ -8,7 +8,7 @@ import App from './App'
 import Result from './Result'
 import './index.css'
 import {
-                      HashRouter as Router,
+                      BrowserRouter as Router,
                       Switch,
                       Route,
                       Link
@@ -28,7 +28,7 @@ ReactDOM.render(
             <Link to="/result">Home</Link>
             <App />
         </Route>
-                  <Route path="/result">
+                  <Route path="/redirect">
                               <Result />
                             </Route>
                             </Switch>

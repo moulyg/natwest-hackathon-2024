@@ -3,12 +3,12 @@ import createRequest from './request'
 export function createDomesticPayment(dispatch, payload) {
     createRequest(
         dispatch,
-        'pisp/domestic-payments',
+        '/domestic-payments',
         'POST',
-        { payload },
+        { ...payload },
         {},
         function (response) {
-            // to do 
+           console.log(response);
         }
     )
 }

@@ -37,8 +37,8 @@ public class PaymentRemote {
 
     }
 
-    public String createAuthorizeUri(String consentId) {
-       return pispUtil.createAuthorizeUrl(consentId);
+    public String createAuthorizeUri(String consentId, String state) {
+       return pispUtil.createAuthorizeUrl(consentId, state);
     }
 
     public OBWriteDomesticResponse createDomesticPayment(OBWriteDomestic obWriteDomestic2, HttpRequestHeader httpRequestHeader) {

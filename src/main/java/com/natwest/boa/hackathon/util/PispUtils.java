@@ -18,12 +18,12 @@ public class PispUtils extends BaseApiUtils {
     }
 
     @Override
-    public String createAuthorizeUrl(String consentId) {
+    public String createAuthorizeUrl(String consentId, String state) {
         return String.format("%s?client_id=%s&response_type=code id_token&scope=openid payments&redirect_uri=%s&state=%s&request=%s&authorization_username=%s&authorization_account=%s",
                 pispConfig.getPispAudience(),
                 clientConfig.getClientId(),
                 clientConfig.getRedirectUri(),
-                clientConfig.getClientState(),
+                state,
                 consentId,
                 clientConfig.getAuthorizationUsername(),
                 clientConfig.getAuthorizationAccount());

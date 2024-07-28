@@ -20,8 +20,16 @@ public class RequestResponseLoggingFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        res.setHeader("Access-Control-Allow-Headers", "*");
+        res.setHeader("Access-Control-Max-Age", "3600");
         System.out.println(
                 "Logging Request  " +  req.getMethod() + " - " + req.getRequestURI());
-        chain.doFilter(request, response);
+        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
+            res.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, res);
+        }
     }
 }

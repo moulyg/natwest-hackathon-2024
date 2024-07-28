@@ -31,7 +31,7 @@ public class PispController {
 
     @GetMapping(value = AUTHORIZATION_OAUTH2_ENDPOINT)
     public String pispConsentAuthUrl(@PathVariable("consentId") String consentId) {
-        return pispService.createAuthorizeUri(consentId);
+        return pispService.createAuthorizeUri(consentId, null);
     }
 
     @PostMapping(value = DOMESTIC_PAYMENTS_ENDPOINT)

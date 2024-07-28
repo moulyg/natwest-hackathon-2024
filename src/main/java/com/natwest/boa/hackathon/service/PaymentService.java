@@ -37,8 +37,8 @@ public class PaymentService {
         return pispRemote.createPaymentConsent(obWriteDomesticConsent2, setHeader(accessToken));
     }
 
-    public String createAuthorizeUri(String consentId) {
-        return pispRemote.createAuthorizeUri(consentId);
+    public String createAuthorizeUri(String consentId, String state) {
+        return pispRemote.createAuthorizeUri(consentId, state);
     }
 
     public OBWriteDomesticResponse createDomesticPayment(OBWriteDomestic obWriteDomestic, String accessToken) {
