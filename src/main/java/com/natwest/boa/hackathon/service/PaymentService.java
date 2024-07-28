@@ -21,16 +21,12 @@ import java.util.UUID;
 public class PaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
-    private PaymentRemote pispRemote;
-    private TokenRemote tokenRemote;
-    private ClientConfig clientConfig;
-    private ObjectMapper mapper;
+    private final PaymentRemote pispRemote;
+    private final ClientConfig clientConfig;
 
-    public PaymentService(PaymentRemote pispRemote, TokenRemote tokenRemote, ClientConfig clientConfig) {
+    public PaymentService(PaymentRemote pispRemote, ClientConfig clientConfig) {
         this.pispRemote = pispRemote;
-        this.tokenRemote = tokenRemote;
         this.clientConfig = clientConfig;
-        mapper = new ObjectMapper();
     }
     public OBWriteDomesticConsentResponse createPaymentConsent(OBWriteDomesticConsent obWriteDomesticConsent2, String accessToken) {
         //first access token

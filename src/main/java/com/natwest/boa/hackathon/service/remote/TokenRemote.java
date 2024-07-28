@@ -15,9 +15,9 @@ public class TokenRemote {
 
     private static final Logger logger = LoggerFactory.getLogger(TokenRemote.class);
 
-    private RestTemplate securedRestTemplate;
-    private TokenUtils tokenUtil;
-    private ClientConfig clientConfig;
+    private final RestTemplate securedRestTemplate;
+    private final TokenUtils tokenUtil;
+    private final ClientConfig clientConfig;
 
 
     public TokenRemote(RestTemplate securedRestTemplate, TokenUtils tokenUtil, ClientConfig clientConfig) {

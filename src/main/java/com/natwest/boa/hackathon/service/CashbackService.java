@@ -13,8 +13,12 @@ import java.util.Map;
 @Service
 public class CashbackService {
 
+    private final CashbackRepository cashbackRepository;
+
     @Autowired
-    private CashbackRepository cashbackRepository;
+    public CashbackService(CashbackRepository cashbackRepository) {
+        this.cashbackRepository = cashbackRepository;
+    }
 
 
     public Cashback calculateRewardCashBack(double amount, String paymentId, String accountNumber) {
