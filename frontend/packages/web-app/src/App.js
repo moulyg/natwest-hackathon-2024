@@ -84,7 +84,7 @@ Within 30 days of delivery, you may return new, unopened physical merchandise in
 
       <p>Order totals include VAT. See details</p>
 
-<form action="http://localhost:8080/open-banking/v3/payment-submit" method="POST">
+<form action="http://localhost:8080/api/v1/domestic-payments-consents" method="POST">
           <input type="hidden" value="50" name="amount" />
       <Button type="primary" htmlType="submit" block>Buy now</Button>
         </form>

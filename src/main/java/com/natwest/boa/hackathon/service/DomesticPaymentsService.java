@@ -7,36 +7,47 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.natwest.boa.hackathon.model.consent.Consent;
-import com.natwest.boa.hackathon.model.payments.*;
 import com.natwest.boa.hackathon.model.cashback.Cashback;
+import com.natwest.boa.hackathon.model.payments.OBCashAccountCreditor;
+import com.natwest.boa.hackathon.model.payments.OBDomestic;
+import com.natwest.boa.hackathon.model.payments.OBDomesticInstructedAmount;
+import com.natwest.boa.hackathon.model.payments.OBExternalPaymentContextCode;
+import com.natwest.boa.hackathon.model.payments.OBRemittanceInformation;
+import com.natwest.boa.hackathon.model.payments.OBRisk;
+import com.natwest.boa.hackathon.model.payments.OBTransactionIndividualStatusCode;
+import com.natwest.boa.hackathon.model.payments.OBWriteDataDomesticConsent;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomestic;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomesticConsent;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomesticConsentResponse;
+import com.natwest.boa.hackathon.model.payments.OBWriteDomesticResponse;
 import com.natwest.boa.hackathon.model.token.TokenResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 @org.springframework.stereotype.Service
 public class DomesticPaymentsService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DomesticPaymentsService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomesticPaymentsService.class);
 
     @Autowired
     private CashbackService cashbackService;
 
     @Autowired
     private TokenService tokenService;
-    
+
     @Autowired
     private PaymentService pispService;
 
     @Autowired
     private ConsentService consentService;
 
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
 
     public DomesticPaymentsService() {
         mapper = new ObjectMapper();
@@ -45,7 +56,7 @@ public class DomesticPaymentsService {
         mapper.registerModule(new JavaTimeModule());
     }
 
-    public OBWriteDataDomesticResponse makeDomesticPayment(Map<String, String> body) throws JsonProcessingException, InterruptedException {
+    public OBWriteDomesticResponse makeDomesticPayment(Map<String, String> body) throws JsonProcessingException, InterruptedException {
         String code = body.get("code");
         String state = body.get("state");
         Thread.sleep(2000);
@@ -62,9 +73,9 @@ public class DomesticPaymentsService {
         if (isPaymentSuccessful(paymentsSubmit.getData().getStatus()) && Objects.nonNull(sustainableProductsAmount)) {
             //Call Cashback API
             Cashback cashbackAmount = cashbackService.calculateRewardCashBack(Double.parseDouble(sustainableProductsAmount), paymentsSubmit.getData().getDomesticPaymentId(), paymentsSubmit.getData().getDebtor().getIdentification());
-            logger.info("Received cashback of "+cashbackAmount.toString());
+            LOGGER.info("Received cashback of " + cashbackAmount.toString());
         }
-        return buildOBWriteDataDomesticResponse();
+        return paymentsSubmit;
     }
 
     private boolean isPaymentSuccessful(OBTransactionIndividualStatusCode status) {
@@ -72,36 +83,71 @@ public class DomesticPaymentsService {
     }
 
 
-    private OBWriteDataDomesticResponse buildOBWriteDataDomesticResponse() {
+    public RedirectView submitDomesticPaymentsConsent() throws JsonProcessingException {
 
+        //Token Service
+        TokenResponse tokenResponse = tokenService.getTokenResponse();
 
-        OBWriteDataDomesticResponse obWriteDataDomesticResponse = new OBWriteDataDomesticResponse();
-        obWriteDataDomesticResponse.setDomesticPaymentId(UUID.randomUUID().toString());
-        obWriteDataDomesticResponse.setConsentId(UUID.randomUUID().toString());
-        obWriteDataDomesticResponse.setCreationDateTime(OffsetDateTime.now());
-        obWriteDataDomesticResponse.setStatus(OBTransactionIndividualStatusCode.ACCEPTEDSETTLEMENTINPROCESS);
-        obWriteDataDomesticResponse.setStatusUpdateDateTime(OffsetDateTime.now());
+        OBWriteDomesticConsent obWriteDomesticConsent2 = getObWriteDomesticConsent();
 
-        OBDomestic obDomestic = getObDomestic();
+        //Create Payment Consents
+        OBWriteDomesticConsentResponse obWriteDataDomesticConsentResponse2 = pispService.createPaymentConsent(obWriteDomesticConsent2, tokenResponse.getAccessToken());
 
+        String consentId = obWriteDataDomesticConsentResponse2.getData().getConsentId();
 
-        obWriteDataDomesticResponse.setInitiation(obDomestic);
+        //Consent storing in H2
+        Consent storedConsent = consentService.saveConsent(consentId, mapper.writeValueAsString(obWriteDataDomesticConsentResponse2));
 
-        OBMultiAuthorisation obMultiAuthorisation = new OBMultiAuthorisation();
-        obWriteDataDomesticResponse.setMultiAuthorisation(obMultiAuthorisation);
+        LOGGER.info("Saved Consent Details : " + storedConsent.toString());
 
-        return obWriteDataDomesticResponse;
+        String authorizeUri = pispService.createAuthorizeUri(consentId, storedConsent.getId().toString());
+        RedirectView rv = new RedirectView();
+        rv.setContextRelative(true);
+        rv.setUrl(authorizeUri);
+        return rv;
     }
 
-    private static OBDomestic getObDomestic() {
-        OBDomestic obDomestic = new OBDomestic();
-        obDomestic.setInstructionIdentification("1234567");
-        obDomestic.setEndToEndIdentification("EndToEndIdentification");
-        obDomestic.setLocalInstrument("UK.OBIE.FPS");
-        OBDomesticInstructedAmount obDomesticInstructedAmount = new OBDomesticInstructedAmount();
-        obDomesticInstructedAmount.setAmount("100");
-        obDomesticInstructedAmount.setCurrency("GBP");
-        obDomestic.setInstructedAmount(obDomesticInstructedAmount);
-        return obDomestic;
+    private static OBWriteDomesticConsent getObWriteDomesticConsent() {
+        OBWriteDomesticConsent obWriteDomesticConsent2 = new OBWriteDomesticConsent();
+        OBWriteDataDomesticConsent data = new OBWriteDataDomesticConsent();
+        OBDomestic initiation = new OBDomestic();
+        OBRisk risk = new OBRisk();
+        //set risk
+        risk.setPaymentContextCode(OBExternalPaymentContextCode.ECOMMERCEGOODS);
+        obWriteDomesticConsent2.setRisk(risk);
+        // set data
+        obWriteDomesticConsent2.setData(data);
+        data.setInitiation(initiation);
+        //set identification ids
+        initiation.setInstructionIdentification("instr-identification");
+        initiation.setEndToEndIdentification("e2e-identification");
+        //set Amount
+        OBDomesticInstructedAmount amount = new OBDomesticInstructedAmount();
+        amount.setAmount("50.00");
+        amount.setCurrency("GBP");
+        initiation.setInstructedAmount(amount);
+
+        // Creditor Account
+        OBCashAccountCreditor creditorAccount = new OBCashAccountCreditor();
+        creditorAccount.setSchemeName("IBAN");
+        creditorAccount.setIdentification("BE56456394728288");
+        creditorAccount.setName("ACME DIY");
+        creditorAccount.setSecondaryIdentification("secondary-identif");
+        initiation.setCreditorAccount(creditorAccount);
+
+
+        OBRemittanceInformation remittanceInformation = new OBRemittanceInformation();
+        remittanceInformation.setReference("Tools");
+        remittanceInformation.setUnstructured("Tools");
+        initiation.setRemittanceInformation(remittanceInformation);
+        return obWriteDomesticConsent2;
+    }
+
+    public RedirectView redirection(String parameters, HttpServletRequest httpServletRequest){
+        LOGGER.info("redirection completed = " + parameters + httpServletRequest.getRequestURI());
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+        redirectView.setUrl("http://localhost:3000/#/result");
+        return redirectView;
     }
 }
