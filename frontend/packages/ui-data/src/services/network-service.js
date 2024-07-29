@@ -12,8 +12,7 @@ export default {
                 if (error.response.status === 401) {
                     console.log('EXPIRED TOKEN!')
                     localStorage.clear()
-                    store.dispatch(logout())
-                    history.push('/')
+                    history.push('/home')
                 }
                 return Promise.reject(error)
             }

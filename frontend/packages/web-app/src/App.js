@@ -1,64 +1,40 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from '@openbanking/ui-common/lib/ErrorBoundary'
-import Loading from '@openbanking/ui-common/lib/Loading'
-import Error from '@openbanking/ui-common/lib/Error'
-import NotFound from '@openbanking/ui-common/lib/NotFound'
 import './App.css'
-import DeliveryAddress from './DeliveryAddress'
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import BankAccountSection from './BankAccountSection'
+import Header from './Header'
 import { Typography, Button, Card, Col, Row, Statistic, Space } from 'antd';
-import { List, Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Collapse } from 'antd';
-import type { CollapseProps } from 'antd';
+import { List, Divider, Layout } from 'antd';
 const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 // views
 const list= [
-{name: "Items:", amount: "GBP 18,12"},
-{name: "Postage & Packing:", amount: "GBP 5,91"},
-{name: "Exchange rate guarantee fee:", amount: "GBP 0,42"},
-{name: "Order Total:", amount: "GBP 24,45"},
+{name: "Items:", amount: "GBP 18.12"},
+{name: "Postage & Packing:", amount: "GBP 5.91"},
+{name: "Exchange rate guarantee fee:", amount: "GBP 0.42"},
+{name: "Order Total:", amount: "GBP 24.45"},
 ];
 
-
-const items: CollapseProps['items'] = [
-  {
-    key: '1',
-    label: <Title level={5} style={{ margin: 0 }}>1 Choose a delivery address</Title>,
-    children: <DeliveryAddress />,
-  },
-  {
-    key: '2',
-    label: <Title level={5} style={{ margin: 0 }}>2 Payment method</Title>,
-    children: <DeliveryAddress />,
-  },
-  {
-    key: '3',
-    label: <Title level={5} style={{ margin: 0 }}>3 Items and delivery</Title>,
-    children: <DeliveryAddress />,
-  },
-];
 const App = () => {
-    const loading = useSelector((state) => state.common.loading)
-    const error = useSelector((state) => state.common.error)
-
     return (
         <div className="app">
          <Layout>
-              <Header style={{ display: 'flex', alignItems: 'center' }}>
-                <div className="demo-logo" />
-              </Header>
+              <Header />
               <Content style={{ padding: '48px' }}>
             <ErrorBoundary>
                 <Row gutter={16}>
                     <Col span={18}>
                      <Card bordered={false}>
-                    <Collapse accordion collapsible="header" ghost items={items} bordered={true} defaultActiveKey={['2']} />
+                     <Title level={4} style={{ margin: 0 }}>1 Choose a delivery address</Title>
+          <Divider />
+                     <Title level={4} style={{ margin: 0 }}>2 Items and delivery</Title>
+                               <Divider />
+                     <Title level={4} style={{ margin: 0 }}>3 Payment method</Title>
+                               <Divider />
+                               <BankAccountSection />
                     <p>
 
-Need help? Check our <a href="">Help pages</a> or <a href="">contact us</a>
+Need help? Check our Help pages or contact us
 When you click the "Buy now" button, we'll send you an e-mail message acknowledging receipt of your order. Your contract to purchase an item will not be complete until we send you an e-mail to indicate that the item has been dispatched.
 Within 30 days of delivery, you may return new, unopened physical merchandise in its original condition. Exceptions and restrictions apply.
                     </p>

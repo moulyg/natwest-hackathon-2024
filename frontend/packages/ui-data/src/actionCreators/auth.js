@@ -1,2 +1,0 @@
-export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
-export const SET_JOURNEY_TYPE = 'SET_JOURNEY_TYPE'

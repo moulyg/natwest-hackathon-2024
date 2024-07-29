@@ -1,43 +1,52 @@
-import React, { useState, useEffect } from "react";
-import type { RadioChangeEvent } from "antd";
-import { Skeleton, Typography, Button, Card, Col, Row, Statistic, Space, Result } from "antd";
+import React, { useEffect } from "react";
+import { Skeleton, Result } from "antd";
 
+import Header from './Header'
 import { connect } from 'react-redux'
 import { createDomesticPayment } from '@openbanking/ui-data/lib/services/payment-service'
 import { parse } from 'query-string'
 import {
-  Divider,
-  List,
-  Radio,
-  Avatar,
-  Breadcrumb,
   Layout,
-  Menu,
-  theme,
 } from "antd";
-const { Title } = Typography;
+const { Content } = Layout;
 
 const ResultPage = ({createDomesticPaymentFn, loading, error}) => {
   useEffect(() => {
     const { code, state } = parse(window.location.hash.substring(1))
-    createDomesticPaymentFn({code, state, sustainableProductsAmount: "50"})
+    createDomesticPaymentFn({code, state, sustainableProductsAmount: "9.30"})
   }, []);
   return (
-    <div>
-      {loading ? <Skeleton /> : (
+     <Layout>
+                  <Header />
+                  <Content style={{ padding: '48px' }}>
+      {loading ? (
+        <div style={{ width: '400px', textAlign: 'center', margin: '0 auto' }}>
+        <img  style={{ borderRadius: '100%'}} src="images/loading.png" alt="loading" width="200" height="200"/>
+        <h3>Please wait while we securely process your payment. This may take a few moments.
+
+            Thank you for your patience.
+
+</h3>
+        <Skeleton />
+        </div>
+      ) : (
       error ? <Result
                  status={error.response.status}
                  title="Sorry, something went wrong."
                  subTitle={error.response.data.message}
                /> :
-               <Result
-                   status="success"
-                   title="Successfully"
-                   subTitle="Order number: 2017182818828182881 "
+                <div style={{ width: '400px', textAlign: 'center', margin: '0 auto' }}>
+
+                <Result
+                icon={ <img  style={{ borderRadius: '100%'}} src="images/Sucessful.png" alt="loading" width="200" height="200"/>}
+                   title="Payment Successful - Thank You for Your Purchase!"
+                   subTitle="Order number: 2017182818828182881. Thank you for choosing Fin Fusion Online Market. Your order is now being processed, and you will receive a confirmation email with tracking information once your items have shipped."
                  />
+                 </div>
 
       )}
-    </div>
+    </Content>
+    </Layout>
   );
 }
 

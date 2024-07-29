@@ -13,15 +13,3 @@ export function createDomesticPayment(dispatch, payload) {
     )
 }
 
-export function getDomesticPaymentStatus(dispatch) {
-    createRequest(
-        dispatch,
-        '/domestic-payment-status',
-        'GET',
-        null,
-        {},
-        function (response) {
-           // to do 
-        }
-    )
-}

@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import type { RadioChangeEvent } from "antd";
-import { Typography, Button, Card, Col, Row, Statistic, Space } from "antd";
+import { Typography, Card } from "antd";
 
 import {
   Divider,
   List,
-  Radio,
   Avatar,
-  Breadcrumb,
-  Layout,
-  Menu,
-  theme,
 } from "antd";
 const { Title } = Typography;
 const data = [
@@ -40,11 +34,10 @@ const data = [
   },
 ];
 
-export default function DeliveryAddress() {
-  const [value, setValue] = useState(1);
-  const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
+export default function BankAccountSection() {
+  const [value, setValue] = useState(0);
+  const onChange = (index) => {
+    setValue(index);
   };
 
   return (
@@ -60,29 +53,21 @@ export default function DeliveryAddress() {
           Bank Accounts
         </Title>
         <Divider />
-        <Radio.Group onChange={onChange} value={value} className="block">
           <List
+           role="list"
             itemLayout="horizontal"
             dataSource={data}
-            renderItem={(item, index) => (
-              <List.Item actions={[<Radio value={item.id} />]}>
+            renderItem={(item,index) => (
+              <List.Item aria-label="Item" role="listitem" tabIndex="0" className={(index === value ? "selected" : "" )} onClick={() => onChange(index)}>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.url} />}
+                  avatar={<Avatar alt={item.title} src={item.url} />}
                   title={item.title}
                   description={item.description}
                 />
               </List.Item>
             )}
           />
-          <Title
-            level={5}
-            style={{
-              margin: "16px 0 0 0",
-            }}
-          >Credit Cards
-          </Title>
           <Divider />
-        </Radio.Group>
       </Card>
     </div>
   );

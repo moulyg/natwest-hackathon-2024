@@ -11,7 +11,6 @@ import {
                       BrowserRouter as Router,
                       Switch,
                       Route,
-                      Link
                     } from "react-router-dom";
 
 // bootstrapping react app
@@ -23,15 +22,14 @@ ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
         <Router>
-        <Switch>
-        <Route path="/home">
-            <Link to="/result">Home</Link>
-            <App />
-        </Route>
-                  <Route path="/redirect">
-                              <Result />
-                            </Route>
-                            </Switch>
+            <Switch>
+            <Route exact path="/">
+                <App />
+            </Route>
+            <Route path="/redirect">
+                <Result />
+            </Route>
+            </Switch>
         </Router>
         </React.StrictMode>
     </Provider>,
