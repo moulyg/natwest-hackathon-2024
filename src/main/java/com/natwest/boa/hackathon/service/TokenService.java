@@ -7,7 +7,6 @@ import com.natwest.boa.hackathon.service.remote.TokenRemote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 
 @Service

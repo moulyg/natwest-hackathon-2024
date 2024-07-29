@@ -18,8 +18,8 @@ public class PaymentRemote {
 
     private static final Logger logger = LoggerFactory.getLogger(PaymentRemote.class);
 
-    private RestTemplate sslRestTemplate;
-    private PispUtils pispUtil;
+    private final RestTemplate sslRestTemplate;
+    private final PispUtils pispUtil;
 
     public PaymentRemote(RestTemplate restTemplate, PispUtils pispUtil) {
         this.sslRestTemplate = restTemplate;

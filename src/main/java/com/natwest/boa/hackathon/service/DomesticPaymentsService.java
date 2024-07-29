@@ -35,21 +35,22 @@ public class DomesticPaymentsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DomesticPaymentsService.class);
 
-    @Autowired
-    private CashbackService cashbackService;
+    private final CashbackService cashbackService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private PaymentService pispService;
+    private final PaymentService pispService;
 
-    @Autowired
-    private ConsentService consentService;
+    private final ConsentService consentService;
 
     private final ObjectMapper mapper;
 
-    public DomesticPaymentsService() {
+    @Autowired
+    public DomesticPaymentsService(CashbackService cashbackService, TokenService tokenService, PaymentService pispService, ConsentService consentService) {
+        this.cashbackService = cashbackService;
+        this.tokenService = tokenService;
+        this.pispService = pispService;
+        this.consentService = consentService;
         mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

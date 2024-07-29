@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConsentService {
 
+    private final ConsentRepository repository;
+
     @Autowired
-    private ConsentRepository repository;
+    public ConsentService(ConsentRepository repository) {
+        this.repository = repository;
+    }
 
     public Consent saveConsent(String consentId, String consentData) {
         Consent consent = new Consent();
