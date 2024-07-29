@@ -6,6 +6,7 @@ import store from '@openbanking/ui-data/lib/store'
 import networkService from '@openbanking/ui-data/lib/services/network-service'
 import App from './App'
 import Result from './Result'
+import RewardScreen from './RewardScreen'
 import './index.css'
 import {
                       BrowserRouter as Router,
@@ -28,6 +29,9 @@ ReactDOM.render(
             </Route>
             <Route path="/redirect">
                 <Result />
+            </Route>
+            <Route path="/mobile">
+                <RewardScreen />
             </Route>
             </Switch>
         </Router>

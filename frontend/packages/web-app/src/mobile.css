@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #121212;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.h1 {
+ color: #fff;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+}
+header small {
+color: #fff;
+font-size: 24px;
+position: absolute;
+top: 8px;
+left: 20px;
+}
+
+.scroll {
+    padding: 50px 20px;
+}
+.slider {
+    border-radius: 10px;
+    background: #1e1e1e;
+    height: 100px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.slider h5 {
+color: #fff;
+margin: 0;
+padding: 0;
+font-size: 16px;
+text-transform: uppercase;
+}
+
+.slider p {
+color: #d3cfcf !important;
+margin: 0;
+font-size: 12px;
+padding: 0;
+}
+.slider strong {
+color: #b4a4c8;
+margin: 0;
+padding: 0;
+font-size: 18px;
+display: block;
+text-align: right;
+padding-top: 10px;
+}
+
+.slider small {
+padding-right: 10px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    display: flex;
+    content-align: center;
+}
+.pagination a.pink {
+color: #b4a4c8;
+}
+.pagination a {
+padding: 0 5px;
+}
+.menu .item {
+    background: #1e1e1e;
+    padding: 0 10px;
+border-radius: 4px;
+height: 50px;
+display: flex;
+justify-content: space-between;
+margin-top: 10px;
+color: #fff;
+    align-items: center;
+}
+
+.menu .item p {
+color: #fff !important;
+}
+.menu .item small {
+color: #fff !important;
+background: #0072e2;
+padding: 2px 5px;
+border-radius: 10px;
+font-size: 10px;
+margin-right: 10px;
+}
+.menu .item .pink {
+color: #d3cfcf !important;
+margin: 0;
+font-size: 20px;
+}
