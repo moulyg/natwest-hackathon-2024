@@ -35,6 +35,12 @@ You can also add an entry for PORT (optional) if facing any issue with port whil
 PORT=4001
 REACT_APP_ACCOUNT_ID=11111111
 ```
+if you have latest verson of nodejs set following variable before run the application
+
+```
+export node_options=--openssl-legacy-provider
+```
+
 To run the application, use command:
 
 ``` nowrap

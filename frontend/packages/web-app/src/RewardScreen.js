@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import './mobile.css'
-import { Button, Flex, Table, Skeleton } from 'antd';
+import { Button, Flex, Table, Skeleton, Modal } from 'antd';
 import { getRewardPoints } from '@openbanking/ui-data/lib/services/payment-service'
 const RewardScreen = ({getRewardPointsFn, loading, data}) => {
     const items= ["My Transaction", "Payment & Transfer", "My Rewards","Manage my card & Apple Pay",
     "My Overdraft", "Get Cash", "Round Ups", "Direct Debits", "Standing Orders"]
     const newItems = [2, 3,5];
     const [show, setShow] = useState(0);
+    const [isModalOpen, setModalOpen] = useState(false);
     const expandSection = (index) => {
      if (index === 2) {
         setShow(index);
@@ -66,7 +67,15 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
             { show === index && <div className="reward-section">
             {data && data.totalCashback}
             {loading && <Skeleton />}
-            {data && data.cashBacks && <div><Table
+            {data && data.cashBacks && <div>
+            <div className="slider">
+                        <img src="/images/sustainable.png" alt="sustainable" />
+                            <h5>Sustainable Cash rewards</h5>
+                            <p><small>&#9432;</small></p>
+                            <strong><small onClick={() => setModalOpen(true)}>&#9432;</small> £{data.totalCashback}</strong>
+                        </div>
+             <Modal title="Transaction History" open={isModalOpen} footer={null} onCancel={() => setModalOpen(false)}>
+                  <Table
             columns={columns}
             pagination={false}
             dataSource={data.cashBacks}
@@ -80,10 +89,11 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
                     </Table.Summary>
                   )}
             />
+            </Modal>
              <Flex vertical gap="small" style={{marginTop: 10, width: '100%' }}>
-                <Button type="primary" block>Bank your Rewards</Button>
-                <Button type="primary" block>Exchange your Rewards</Button>
-                <Button type="primary" block>Donate your Rewards</Button>
+                <Button type="primary" block>Pay them as money into your bank account</Button>
+                <Button type="primary" block>Exchange them for e-gift cards from our partners.</Button>
+                <Button type="primary" block>Donate them to one of our chosen charities</Button>
               </Flex>
             </div>}
             </div>}

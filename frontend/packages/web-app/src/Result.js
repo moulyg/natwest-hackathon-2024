@@ -13,7 +13,7 @@ const { Content } = Layout;
 const ResultPage = ({createDomesticPaymentFn, loading, error}) => {
   useEffect(() => {
     const { code, state } = parse(window.location.hash.substring(1))
-    createDomesticPaymentFn({code, state, sustainableProductsAmount: "9.30"})
+    createDomesticPaymentFn({code, state, sustainableProductsAmount:  window.sessionStorage.getItem("amount")})
   }, []);
   return (
      <Layout>

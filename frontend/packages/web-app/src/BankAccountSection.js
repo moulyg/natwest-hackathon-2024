@@ -10,13 +10,13 @@ const { Title } = Typography;
 const data = [
   {
     title: "Natwest Bank",
-    description: "Earn Reward Points with NatWest Bank!",
+    description: "Earn Rewards with NatWest Bank!",
     url: "/images/natwest.jpg",
     id: 1,
   },
   {
     title: "Royal Bank of Scotland",
-    description: "Earn Reward Points with Royal Bank of Scotland!",
+    description: "Earn Rewards with Royal Bank of Scotland!",
     url: "/images/rbs.png",
     id:2,
   },

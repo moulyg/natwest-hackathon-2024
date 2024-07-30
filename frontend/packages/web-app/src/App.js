@@ -16,6 +16,11 @@ const list= [
 ];
 
 const App = () => {
+const randomIntFromInterval = (min, max) => {
+  const number = Math.floor(Math.random() * (max - min + 1) + min);
+  window.sessionStorage.setItem("amount", number);
+  return number;
+}
     return (
         <div className="app">
          <Layout>
@@ -69,7 +74,7 @@ Within 30 days of delivery, you may return new, unopened physical merchandise in
                           title={<Title level={5}>Your Sustainable Contribution</Title>}
                           >
                         <Statistic
-                          value={9.3}
+                          value={randomIntFromInterval(5, 10)}
                           precision={2}
                           valueStyle={{ color: '#86bc25' }}
                           prefix={<div className="green-icon" />}
