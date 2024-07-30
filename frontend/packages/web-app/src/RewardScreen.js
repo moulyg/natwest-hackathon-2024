@@ -91,9 +91,9 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
             />
             </Modal>
              <Flex vertical gap="small" style={{marginTop: 10, width: '100%' }}>
-                <Button type="primary" block>Pay them as money into your bank account</Button>
-                <Button type="primary" block>Exchange them for e-gift cards from our partners.</Button>
-                <Button type="primary" block>Donate them to one of our chosen charities</Button>
+                <Button style={{backgroundColor: '#470E69'}} type="primary" block>Pay them as money into your bank account</Button>
+                <Button style={{backgroundColor: '#470E69'}} type="primary" block>Exchange them for e-gift cards from our partners.</Button>
+                <Button style={{backgroundColor: '#470E69'}} type="primary" block>Donate them to one of our chosen charities</Button>
               </Flex>
             </div>}
             </div>}
