@@ -110,3 +110,16 @@ color: #d3cfcf !important;
 margin: 0;
 font-size: 20px;
 }
+.slider {
+position: relative;
+}
+.slider img {
+width: 20px;
+height: 20px;
+position: absolute;
+bottom: 20px;
+left: 10px;
+}
+a, u {
+  text-decoration: none;
+}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import './mobile.css'
-import { Table, Skeleton } from 'antd';
+import { Button, Flex, Table, Skeleton } from 'antd';
 import { getRewardPoints } from '@openbanking/ui-data/lib/services/payment-service'
 const RewardScreen = ({getRewardPointsFn, loading, data}) => {
     const items= ["My Transaction", "Payment & Transfer", "My Rewards","Manage my card & Apple Pay",
@@ -45,6 +45,7 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
             </header>
             <div className="scroll">
             <div className="slider">
+            <img src="/images/natwest.jpg" alt="natwest" />
                 <h5>John Block</h5>
                 <p><small>&#9432;</small>Select Account | NWBK50000012345601 | 51-81-22</p>
                 <strong><small>&#9432;</small> £ 73.50</strong>
@@ -65,7 +66,7 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
             { show === index && <div className="reward-section">
             {data && data.totalCashback}
             {loading && <Skeleton />}
-            {data && data.cashBacks && <Table
+            {data && data.cashBacks && <div><Table
             columns={columns}
             pagination={false}
             dataSource={data.cashBacks}
@@ -78,7 +79,13 @@ const RewardScreen = ({getRewardPointsFn, loading, data}) => {
                       </Table.Summary.Row>
                     </Table.Summary>
                   )}
-            />}
+            />
+             <Flex vertical gap="small" style={{marginTop: 10, width: '100%' }}>
+                <Button type="primary" block>Bank your Rewards</Button>
+                <Button type="primary" block>Exchange your Rewards</Button>
+                <Button type="primary" block>Donate your Rewards</Button>
+              </Flex>
+            </div>}
             </div>}
             </div>
             ))}
